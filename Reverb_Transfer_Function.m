@@ -1,4 +1,5 @@
-% Aalto % ELEC-C5341 - Äänen- ja puheenkäsittely
-% Author: Edvard Ohlström, Marcus Hattula, Katarina Pichna
+% Aalto % ELEC-C5341 - ï¿½ï¿½nen- ja puheenkï¿½sittely
+% Author: Edvard Ohlstrï¿½m, Marcus Hattula, Katarina Pichna
 % Date 13.10.2022
+% hello
 
