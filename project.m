@@ -16,9 +16,12 @@ A = A/max(A, [], 'all');        % normalized feedback matrix
 X = zeros(L+2*max_delay,N);         % initialize delay lines
 X(1+max_delay,:) = b_gains*wav(1);  % initialize first elements of delay line starting at max index
 
-for i = 1:N
-    for j = 2+max_delay:L
-        X(j,i) = wav(j-max_delay) + X(j-m_delays(i),i)*g_gains(i)*A(i,i);
+for j = 2+max_delay:L
+    for i = 1:N
+        X(j,i) = X(j,i) + b_gains(i)*wav(j-max_delay);
+        for k = 1:N
+            X(j+m_delays(k), k) = X(j+m_delays(k), k) + X(j,i)*g_gains(i)*A(i,k);
+        end
     end
 end
 
