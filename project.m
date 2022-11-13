@@ -1,6 +1,7 @@
 clear all; close all;
 
 [wav, fs] = audioread('testTrack.wav');
+%soundsc(wav, fs);
 L = length(wav);
 
 N = 3;                          % number of interconnected delay lines
