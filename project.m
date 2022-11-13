@@ -9,6 +9,8 @@ c_gains = [2.0, 1.0, 0.5];      % gains c_i
 g_gains = [0.3, 0.5, 0.2];      % gains g_i
 m_delays = [2000, 4000, 8000];  % delay amounts (in samples)
 
+max_delay = max(m_delays);
+
 A = eye(N);                     % feedback matrix
 A = A/max(A, [], 'all');        % normalized feedback matrix 
 
