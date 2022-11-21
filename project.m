@@ -7,7 +7,7 @@ unitimpulse(1) = 1;
 
 N = 128;                                % number of interconnected delay lines
 A = randn(N);                           % feedback matrix
-T60 = 0.5;                              % reverberation time
+T60 = 0.6;                              % reverberation time
 g_dB = -60/(T60 * fs);
 g_lin = power(10, (g_dB/20));
 
