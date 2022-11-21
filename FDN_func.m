@@ -27,14 +27,14 @@ function echo_audio = FDN_func(wav, A, b, c, g, delays)
     sz_g = length(g);
     sz_delays = length(delays);
     assert(sz_A_1 == sz_A_2 && sz_A_2 == sz_b && sz_b == sz_c && sz_c == sz_g && sz_g == sz_delays, 'Array lengths must be equal');
+    
     N = sz_b;
     L = length(wav);
     max_delay = max(delays); % reverbation sound takes longer time than 
     
-    %A = A/max(A, [], 'all');        % normalized feedback matrix 
+    A = A/max(A, [], 'all');        % normalized feedback matrix
 
     X = zeros(L+max_delay,N);         % initialize delay lines
-    X(1,:) = b*wav(1);        % initialize first elements of delay line starting at max index
 
     for j = 1:L
         for i = 1:N
@@ -45,5 +45,5 @@ function echo_audio = FDN_func(wav, A, b, c, g, delays)
         end
     end
 
-    echo_audio = sum(c.*X, 2);
+    echo_audio = sum(c.*X, 2)/N;
 end
