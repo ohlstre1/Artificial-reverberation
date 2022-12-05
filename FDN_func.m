@@ -20,7 +20,7 @@
     during real time echo application.
 %}
 
-function echo_audio = FDN_func(wav, A, b, c, g, delays)
+function echo_audio = FDN_func(wav, fs, A, b, c, g, delays)
     [sz_A_1, sz_A_2] = size(A);
     sz_b = length(b);
     sz_c = length(c);
@@ -35,13 +35,31 @@ function echo_audio = FDN_func(wav, A, b, c, g, delays)
     A = A/max(A, [], 'all');        % normalized feedback matrix
 
     X = zeros(L+max_delay,N);         % initialize delay lines
+    
+    start = 1;
+    lowpass = all(g == 0); % Lowpass mode active when all g_i = 0
+    if(lowpass) % Lowpass filter mode EXPERIMENTAL
+        window_size = 100;
+        f_c = 3400;
+        [filt_b, filt_a] = butter(1, f_c/(fs/2));
+        start = start + window_size;
+    end
 
-    for j = 1:L
+    for j = start:L
         for i = 1:N
             X(j,i) = X(j,i) + b(i)*wav(j);
             for k = 1:N
-                X(j+delays(k), k) = X(j+delays(k), k) + X(j,i)*g(i)*A(i,k);
+                index = j+delays(k);
+                if(lowpass) % LOWPASS MODE:
+                    if(mod(j, 1000) == 0 && i == 1)
+                       disp(j) 
+                    end
+                    X(index, k) = X(index, k) + A(i,k) * lpfilt(X(j-window_size:j,i),filt_b, filt_a);
+                else % DEFAULT MODE
+                    X(index, k) = X(index, k) + X(j,i)*g(i)*A(i,k);
+                end
             end
+
         end
     end
 
