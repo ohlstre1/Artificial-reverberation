@@ -19,7 +19,7 @@
 
 function lowpass_value = lpfilt(input, filt_b, filt_a)
     
-    if(exist('filt_b', 'var') && exist('filt_a', 'var'))
+    if(exist('filt_b', 'var') && exist('filt_a', 'var') && ~isequal(filt_a, zeros(1,2)))
         lowpass_value = filter(filt_b, filt_a, input);
     else
         lowpass_value = MA(input, 5);
@@ -44,7 +44,7 @@ end
 function [output] =  MA(input, k)
     n = length(input);
     last_k = []; % array keeps track of last k elements
-    output = zeros(1,n); % initialize output array
+    output = zeros(n,1); % initialize output array
     for i = 1:n
         last_k = cat(1, last_k, input(i)); % append input element to last_k
         if (length(last_k) > k) % if last_k is larger than k...
