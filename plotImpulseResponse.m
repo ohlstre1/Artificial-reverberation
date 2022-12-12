@@ -33,7 +33,6 @@ function impulse_response = plotImpulseResponse(fs, A, b, c, delays, lowpass_mod
     L = length(impulse_response);
     figure()
     stem(linspace(1, L, L), 10*log10(abs(impulse_response)), 'Marker', 'none', 'BaseValue', -Inf)
-    grid on
     xlim([-L/10, L])
     ylim([-Inf, 10])
     xlabel('Samples')
